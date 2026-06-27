@@ -293,19 +293,19 @@
 </div>
 
 {{-- Modal Import --}}
-<div id="modalImport" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl">
-        <div class="px-6 py-4 border-b flex items-center justify-between">
-            <h3 class="font-display font-bold text-on-surface">Import Data Mahasiswa</h3>
-            <button onclick="document.getElementById('modalImport').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
-                <span class="material-symbols-outlined">close</span>
+<div id="modalImport" class="hidden fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-md shadow-2xl border border-white/20 dark:border-slate-700 transform transition-all">
+        <div class="px-6 py-4 border-b border-gray-100 dark:border-slate-700 flex items-center justify-between bg-gray-50/50 dark:bg-slate-800/50 rounded-t-2xl">
+            <h3 class="font-display font-bold text-on-surface dark:text-white">Import Data Mahasiswa</h3>
+            <button onclick="document.getElementById('modalImport').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                <span class="material-symbols-outlined block">close</span>
             </button>
         </div>
         <div class="px-6 py-4 space-y-4">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-blue-800">
+            <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800/50 rounded-xl px-4 py-3 text-sm text-blue-800 dark:text-blue-300">
                 <p class="font-semibold mb-1">Format: .xlsx, .xls</p>
-                <p>Kolom: <code class="bg-blue-100 px-1 rounded">nim</code>, <code class="bg-blue-100 px-1 rounded">nama</code>, <code class="bg-blue-100 px-1 rounded">program_studi</code>, <code class="bg-blue-100 px-1 rounded">angkatan</code></p>
-                <p class="mt-1 text-xs">NIM duplikat akan dilewati otomatis.</p>
+                <p>Kolom: <code class="bg-blue-100 dark:bg-blue-800/50 px-1 rounded">nim</code>, <code class="bg-blue-100 dark:bg-blue-800/50 px-1 rounded">nama</code>, <code class="bg-blue-100 dark:bg-blue-800/50 px-1 rounded">program_studi</code>, <code class="bg-blue-100 dark:bg-blue-800/50 px-1 rounded">angkatan</code></p>
+                <p class="mt-1 text-xs opacity-80">NIM duplikat akan dilewati otomatis.</p>
             </div>
             <a href="{{ route('mahasiswa.template') }}"
                 class="flex items-center gap-2 text-sm text-primary font-medium hover:underline">
@@ -313,18 +313,18 @@
             </a>
             <form method="POST" action="{{ route('mahasiswa.import') }}" enctype="multipart/form-data">
                 @csrf
-                <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-primary transition-colors cursor-pointer"
+                <div class="border-2 border-dashed border-gray-300 dark:border-slate-600 rounded-xl p-6 text-center hover:border-primary dark:hover:border-primary/50 transition-colors cursor-pointer"
                     onclick="document.getElementById('fileImport').click()">
-                    <span class="material-symbols-outlined text-3xl text-gray-400 block mb-2">upload_file</span>
-                    <p class="text-sm text-text-muted">Klik untuk pilih file</p>
-                    <p class="text-xs text-gray-400 mt-1">.xlsx, .xls — maks 2MB</p>
+                    <span class="material-symbols-outlined text-3xl text-gray-400 dark:text-slate-500 block mb-2">upload_file</span>
+                    <p class="text-sm text-text-muted dark:text-gray-300">Klik untuk pilih file</p>
+                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1">.xlsx, .xls — maks 2MB</p>
                     <p id="namaFile" class="text-sm text-primary font-medium mt-2 hidden"></p>
                 </div>
                 <input type="file" id="fileImport" name="file" accept=".xlsx,.xls" class="hidden"
                     onchange="tampilkanNamaFile(this)">
                 <div class="flex justify-end gap-3 mt-4">
                     <button type="button" onclick="document.getElementById('modalImport').classList.add('hidden')"
-                        class="px-4 py-2 text-sm text-text-muted hover:bg-gray-100 rounded-xl">Batal</button>
+                        class="px-4 py-2 text-sm text-text-muted hover:bg-gray-100 dark:hover:bg-slate-700/50 rounded-xl">Batal</button>
                     <button type="submit"
                         class="px-4 py-2 text-sm bg-primary text-white rounded-xl hover:bg-primary-dark flex items-center gap-2">
                         <span class="material-symbols-outlined text-base">upload</span> Import
