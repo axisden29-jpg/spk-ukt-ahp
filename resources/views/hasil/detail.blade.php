@@ -29,7 +29,7 @@
     <div class="card p-5 text-center">
         <p class="text-xs text-text-muted mb-1">Golongan UKT</p>
         <span class="text-2xl font-bold px-4 py-1 rounded-full
-            {{ $g==1?'bg-green-100 text-green-700':($g==2?'bg-blue-100 text-blue-700':($g==3?'bg-yellow-100 text-yellow-700':($g==4?'bg-orange-100 text-orange-700':'bg-red-100 text-red-700'))) }}">
+            {{ $g==1?'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400':($g==2?'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400':($g==3?'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-500':($g==4?'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400':'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'))) }}">
             UKT {{ $g }}
         </span>
     </div>
@@ -39,13 +39,13 @@
 <div class="card p-6">
     <h2 class="font-display font-semibold text-on-surface mb-4">Breakdown Kontribusi per Kriteria</h2>
     <div class="overflow-x-auto">
-        <table class="w-full text-sm border-collapse">
-            <thead class="bg-gray-50">
+        <table class="w-full text-sm">
+            <thead>
                 <tr>
-                    <th class="border border-gray-200 px-4 py-2 text-left">Kriteria</th>
-                    <th class="border border-gray-200 px-4 py-2 text-center">Nilai Input</th>
-                    <th class="border border-gray-200 px-4 py-2 text-center">Bobot</th>
-                    <th class="border border-gray-200 px-4 py-2 text-center">Kontribusi (Nilai × Bobot)</th>
+                    <th class="table-header text-left">Kriteria</th>
+                    <th class="table-header text-center">Nilai Input</th>
+                    <th class="table-header text-center">Bobot</th>
+                    <th class="table-header text-center">Kontribusi (Nilai × Bobot)</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,16 +57,16 @@
                     $kontribusi = $nilai * $bobot;
                     $totalSkor += $kontribusi;
                 @endphp
-                <tr class="hover:bg-gray-50">
-                    <td class="border border-gray-200 px-4 py-2 font-medium">{{ $k->nama }}</td>
-                    <td class="border border-gray-200 px-4 py-2 text-center font-bold text-on-surface">{{ $nilai }}</td>
-                    <td class="border border-gray-200 px-4 py-2 text-center font-mono text-text-muted">{{ number_format($bobot, 4) }}</td>
-                    <td class="border border-gray-200 px-4 py-2 text-center font-mono font-semibold text-primary">{{ number_format($kontribusi, 6) }}</td>
+                <tr class="table-row">
+                    <td class="table-cell font-medium">{{ $k->nama }}</td>
+                    <td class="table-cell text-center font-bold text-on-surface">{{ $nilai }}</td>
+                    <td class="table-cell text-center font-mono">{{ number_format($bobot, 4) }}</td>
+                    <td class="table-cell text-center font-mono font-semibold text-primary">{{ number_format($kontribusi, 6) }}</td>
                 </tr>
                 @endforeach
-                <tr class="bg-primary-light/40 font-bold">
-                    <td class="border border-gray-200 px-4 py-2 text-primary" colspan="3">Skor Total</td>
-                    <td class="border border-gray-200 px-4 py-2 text-center font-mono text-primary text-base">{{ number_format($totalSkor, 6) }}</td>
+                <tr class="bg-primary-light/40 dark:bg-primary-900/30 font-bold border-t border-gray-100 dark:border-slate-700">
+                    <td class="table-cell text-primary" colspan="3">Skor Total</td>
+                    <td class="table-cell text-center font-mono text-primary text-base">{{ number_format($totalSkor, 6) }}</td>
                 </tr>
             </tbody>
         </table>
