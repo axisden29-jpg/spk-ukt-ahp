@@ -293,6 +293,7 @@
             height: 250,
             fontFamily: "'Inter', sans-serif",
             toolbar: { show: false },
+            background: 'transparent',
             animations: {
                 enabled: true,
                 easing: 'easeinout',
@@ -380,6 +381,7 @@
             type: 'area',
             height: 45,
             sparkline: { enabled: true },
+            background: 'transparent',
             animations: { enabled: true, easing: 'easeinout', speed: 800 }
         },
         stroke: { curve: 'smooth', width: 2 },
