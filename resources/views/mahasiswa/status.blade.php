@@ -60,7 +60,7 @@
     <!-- Filter Status -->
     <button type="submit" name="filter_status" value="semua"
         class="filter-btn px-4 py-1.5 rounded-xl text-xs font-semibold transition-colors {{ $filterAktif === 'semua' ? 'bg-primary text-white' : 'bg-gray-100 text-text-muted hover:bg-gray-200' }}">
-        Semua ({{ $mahasiswas->total() }})
+        Semua ({{ $sudahLengkap + $belumLengkap }})
     </button>
     <button type="submit" name="filter_status" value="lengkap"
         class="filter-btn px-4 py-1.5 rounded-xl text-xs font-semibold transition-colors {{ $filterAktif === 'lengkap' ? 'bg-green-600 text-white' : 'bg-gray-100 text-text-muted hover:bg-green-100 hover:text-green-700' }}">
