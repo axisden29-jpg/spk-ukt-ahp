@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-surface: #f8f9fa;
+        --color-on-surface: #191c1d;
+        --color-text-muted: #636E72;
+    }
+    .dark {
+        --color-surface: #0a1c14;
+        --color-on-surface: #eaf5f0;
+        --color-text-muted: #9bc2b3;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--color-surface);
+        @apply text-on-surface transition-colors duration-300;
+    }
+
+    /* Premium Typography Activation */
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-display tracking-tight;
+    }
+    
+    th {
+        @apply font-display tracking-wider;
+    }
+
+    /* Page Entrance Animation (Staggered) */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    main > * {
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    }
+    main > *:nth-child(1) { animation-delay: 0ms; }
+    main > *:nth-child(2) { animation-delay: 100ms; }
+    main > *:nth-child(3) { animation-delay: 200ms; }
+    main > *:nth-child(4) { animation-delay: 300ms; }
+    main > *:nth-child(5) { animation-delay: 400ms; }
+    main > *:nth-child(6) { animation-delay: 500ms; }
+    main > *:nth-child(7) { animation-delay: 600ms; }
+    main > *:nth-child(8) { animation-delay: 700ms; }
+
+    /* Global Micro-interactions for Buttons */
+    button, 
+    a[href][class*="px-"][class*="py-"][class*="rounded"],
+    .nav-link {
+        transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+    }
+    
+    button:active:not(:disabled), 
+    a[href][class*="px-"][class*="py-"][class*="rounded"]:active,
+    .nav-link:active {
+        transform: scale(0.95) !important;
+    }
+
+    /* Soft-UI Forms */
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    input[type='number'],
+    input[type='search'],
+    textarea,
+    select {
+        @apply bg-gray-100 border-transparent shadow-none dark:bg-slate-800 dark:text-white dark:focus:bg-slate-700 transition-all duration-200;
+    }
+
+    input[type='text']:focus,
+    input[type='email']:focus,
+    input[type='password']:focus,
+    input[type='number']:focus,
+    input[type='search']:focus,
+    textarea:focus,
+    select:focus {
+        @apply bg-white border-transparent outline-none ring-2 ring-primary/30 shadow-lg dark:ring-primary/50;
+    }
+
+    /* Floating Labels */
+    .floating-input-group {
+        position: relative;
+    }
+    .floating-input {
+        @apply block w-full px-4 pt-5 pb-2 text-sm text-gray-900 bg-gray-50 border-0 rounded-xl appearance-none dark:text-white dark:bg-slate-800 focus:outline-none focus:ring-0 focus:border-primary;
+    }
+    .floating-label {
+        @apply absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4;
+    }
+    
+    /* Using sibling selectors instead of Tailwind peer to avoid @apply errors */
+    .floating-input:placeholder-shown ~ .floating-label {
+        @apply scale-100 translate-y-0 text-gray-500 dark:text-gray-400;
+    }
+    .floating-input:focus ~ .floating-label,
+    .floating-input:not(:placeholder-shown) ~ .floating-label {
+        @apply scale-75 -translate-y-3 text-primary dark:text-primary-light;
+    }
+}
+
+@layer components {
+    .sidebar {
+        width: 260px;
+        min-height: 100vh;
+        transition: transform 0.3s ease;
+    }
+    .main-content {
+        margin-left: 260px;
+        min-height: 100vh;
+    }
+    .nav-link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+    .nav-link:hover {
+        background: rgba(255,255,255,0.1);
+        color: #ffffff;
+    }
+    .nav-link.active {
+        background: rgba(255,255,255,0.15);
+        color: #ffffff;
+        font-weight: 600;
+    }
+    .nav-link.active::before {
+        content: '';
+        position: absolute;
+        left: -12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 20px;
+        background-color: #ffffff;
+        border-radius: 0 4px 4px 0;
+        box-shadow: 0 0 8px rgba(255,255,255,0.6);
+    }
+    .nav-link .material-symbols-outlined {
+        font-size: 20px;
+    }
+    .card {
+        @apply bg-white dark:bg-slate-800 rounded-[16px] border border-white/40 dark:border-slate-700 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] transition-colors duration-300;
+    }
+    .card-header {
+        @apply px-6 py-4 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center bg-gray-50/50 dark:bg-slate-800/50 rounded-t-[16px];
+    }
+    .table-container {
+        @apply overflow-x-auto rounded-b-[16px];
+    }
+    .table-header {
+        @apply bg-gray-50/80 dark:bg-slate-900/80 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider py-3 px-4 border-b border-gray-200 dark:border-slate-700 sticky top-0 z-10 backdrop-blur-sm;
+    }
+    .table-row {
+        @apply border-b border-gray-50 dark:border-slate-700/50 hover:bg-gray-50/80 dark:hover:bg-slate-700/30 transition-colors duration-200;
+    }
+    .table-cell {
+        @apply px-4 py-3 text-sm text-gray-700 dark:text-gray-300;
+    }
+}
+
+@layer utilities {
+    .glass-effect {
+        @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-b border-white/30 dark:border-slate-700;
+    }
+    .glass-sidebar {
+        @apply bg-primary/95 dark:bg-slate-900/95 backdrop-blur-lg border-r border-white/10 dark:border-slate-700/50;
+    }
+}
+
+/* Custom Scrollbar - Premium Mac/iOS Style */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.4);
+    border-radius: 20px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 116, 139, 0.7);
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        position: fixed;
+        z-index: 50;
+        transform: translateX(-100%);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+    }
+    .overlay {
+        display: block;
+    }
+}
+
+/* NProgress Customization */
+#nprogress {
+    pointer-events: none;
+}
+#nprogress .bar {
+    background: #006b3f !important;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px !important;
+}
+#nprogress .peg {
+    display: block;
+    position: absolute;
+    right: 0px;
+    width: 100px;
+    height: 100%;
+    box-shadow: 0 0 10px #006b3f, 0 0 5px #006b3f !important;
+    opacity: 1.0;
+    transform: rotate(3deg) translate(0px, -4px);
+}
