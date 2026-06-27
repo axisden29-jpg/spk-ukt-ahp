@@ -1,3 +1,3 @@
 <?php
-// Mengarahkan Vercel ke file index bawaan public Laravel
+// api/index.php
 require __DIR__ . '/../public/index.php';
