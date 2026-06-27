@@ -44,7 +44,7 @@
             {{-- Pilihan Nilai sebagai Radio Button --}}
             <div class="space-y-2">
                 @for($v = $k->skala_min; $v <= $k->skala_max; $v++)
-                <label class="flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all
+                <label class="flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all
                     {{ $nilaiSaat == $v ? 'border-primary bg-primary-light/30 dark:bg-primary-900/30' : 'border-gray-100 dark:border-slate-700 hover:border-gray-300 dark:hover:border-slate-500 hover:bg-gray-50 dark:hover:bg-slate-700' }}"
                     id="label_{{ $k->id }}_{{ $v }}">
                     <input type="radio"
@@ -53,8 +53,8 @@
                         {{ $nilaiSaat == $v ? 'checked' : '' }}
                         required
                         onchange="highlightPilihan({{ $k->id }}, {{ $k->skala_min }}, {{ $k->skala_max }})"
-                        class="mt-0.5 accent-primary shrink-0">
-                    <div class="flex items-start gap-3 flex-1">
+                        class="accent-primary shrink-0">
+                    <div class="flex items-center gap-3 flex-1">
                         <span class="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold shrink-0
                             {{ $nilaiSaat == $v ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-slate-700 text-text-muted dark:text-gray-400' }}"
                             id="badge_{{ $k->id }}_{{ $v }}">
