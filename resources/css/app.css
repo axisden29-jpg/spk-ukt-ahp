@@ -68,7 +68,7 @@
     input[type='search'],
     textarea,
     select {
-        @apply bg-gray-100 border-transparent shadow-none dark:bg-slate-800 dark:text-white dark:focus:bg-slate-700 transition-all duration-200;
+        @apply bg-gray-100 border-transparent shadow-none dark:bg-slate-800 dark:text-white transition-all duration-200;
     }
 
     input[type='text']:focus,
@@ -78,7 +78,7 @@
     input[type='search']:focus,
     textarea:focus,
     select:focus {
-        @apply bg-white border-transparent outline-none ring-2 ring-primary/30 shadow-lg dark:ring-primary/50;
+        @apply bg-white dark:bg-slate-700 border-transparent outline-none ring-2 ring-primary/30 shadow-lg dark:ring-primary/50;
     }
 
     /* Floating Labels */
