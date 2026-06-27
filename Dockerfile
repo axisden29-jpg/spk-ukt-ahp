@@ -94,7 +94,7 @@ RUN mkdir -p storage/framework/cache/data && \
 # Environment
 # ==========================================
 ENV APP_ENV=production
-ENV APP_DEBUG=false
+ENV APP_DEBUG=true
 ENV CACHE_STORE=file
 ENV SESSION_DRIVER=file
 ENV QUEUE_CONNECTION=sync
