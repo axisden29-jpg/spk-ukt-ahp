@@ -1,7 +1,7 @@
 # 1. Use the official lightweight Alpine base image
 FROM alpine:3.20
 
-# 2. Install Apache, PHP 8.3, and all Laravel-required extensions natively
+# 2. Install Apache, PHP 8.3, and all Laravel-required extensions
 RUN apk add --no-cache \
     apache2 \
     php83-apache2 \
@@ -29,31 +29,37 @@ RUN apk add --no-cache \
     unzip \
     git
 
-# 3. Symlink php83 to php so Composer and Artisan commands work seamlessly
+# 3. Symlink php83 to php
 RUN ln -sf /usr/bin/php83 /usr/bin/php
 
-# 4. Copy official pre-compiled Composer binary
+# 4. Copy Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 5. Configure Apache for Hugging Face (Port 7860) and Laravel (Public directory & Rewrites)
+# 5. Configure Apache
 RUN sed -i 's/Listen 80/Listen 7860/' /etc/apache2/httpd.conf && \
     sed -i 's#^DocumentRoot ".*#DocumentRoot "/var/www/localhost/htdocs/public"#' /etc/apache2/httpd.conf && \
     sed -i 's#Directory "/var/www/localhost/htdocs"#Directory "/var/www/localhost/htdocs/public"#' /etc/apache2/httpd.conf && \
     sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/httpd.conf && \
-    sed -i 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf
+    sed -i 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf && \
+    echo "LoadModule php_module /usr/lib/apache2/mod_php83.so" >> /etc/apache2/httpd.conf && \
+    echo "AddHandler php-script .php" >> /etc/apache2/httpd.conf
 
 # 6. Set working directory
 WORKDIR /var/www/localhost/htdocs
 
-# 7. Copy your Laravel project files
+# 7. Copy project files
 COPY . .
-RUN php artisan config:clear && php artisan cache:clear
-# 8. Install PHP dependencies and set correct permissions for Alpine's 'apache' user
-RUN composer install --no-dev --optimize-autoloader \
-    && chown -R apache:apache /var/www/localhost/htdocs/storage /var/www/localhost/htdocs/bootstrap/cache
 
-# Expose the mandatory Hugging Face port
+# 8. Install dependencies FIRST
+RUN composer install --no-dev --optimize-autoloader
+
+# 9. NOW run artisan commands
+RUN php artisan config:clear && php artisan cache:clear
+
+# 10. Fix permissions
+RUN chown -R apache:apache /var/www/localhost/htdocs/storage /var/www/localhost/htdocs/bootstrap/cache
+
 EXPOSE 7860
 ENV APP_DEBUG=true
-# Start Apache in the foreground
+
 CMD ["httpd", "-D", "FOREGROUND"]
