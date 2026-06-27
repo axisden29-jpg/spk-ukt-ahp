@@ -45,7 +45,7 @@
             <div class="space-y-2">
                 @for($v = $k->skala_min; $v <= $k->skala_max; $v++)
                 <label class="flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all
-                    {{ $nilaiSaat == $v ? 'border-primary bg-primary-light/30 dark:bg-primary-900/30' : 'border-gray-100 dark:border-slate-700 hover:border-gray-300 dark:hover:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-800/50' }}"
+                    {{ $nilaiSaat == $v ? 'border-primary bg-primary-light/30 dark:bg-primary-900/30' : 'border-gray-100 dark:border-slate-700 hover:border-gray-300 dark:hover:border-slate-500 hover:bg-gray-50 dark:hover:bg-slate-700' }}"
                     id="label_{{ $k->id }}_{{ $v }}">
                     <input type="radio"
                         name="nilai[{{ $k->id }}]"
@@ -100,13 +100,13 @@ function highlightPilihan(kriteriaId, min, max) {
         if (!label || !badge || !radio) continue;
 
         if (radio.checked) {
-            label.classList.remove('border-gray-100', 'hover:border-gray-300', 'hover:bg-gray-50', 'dark:border-slate-700', 'dark:hover:border-slate-600', 'dark:hover:bg-slate-800/50');
+            label.classList.remove('border-gray-100', 'hover:border-gray-300', 'hover:bg-gray-50', 'dark:border-slate-700', 'dark:hover:border-slate-500', 'dark:hover:bg-slate-700');
             label.classList.add('border-primary', 'bg-primary-light/30', 'dark:bg-primary-900/30');
             badge.classList.remove('bg-gray-100', 'text-text-muted', 'dark:bg-slate-700', 'dark:text-gray-400');
             badge.classList.add('bg-primary', 'text-white');
         } else {
             label.classList.remove('border-primary', 'bg-primary-light/30', 'dark:bg-primary-900/30');
-            label.classList.add('border-gray-100', 'hover:border-gray-300', 'hover:bg-gray-50', 'dark:border-slate-700', 'dark:hover:border-slate-600', 'dark:hover:bg-slate-800/50');
+            label.classList.add('border-gray-100', 'hover:border-gray-300', 'hover:bg-gray-50', 'dark:border-slate-700', 'dark:hover:border-slate-500', 'dark:hover:bg-slate-700');
             badge.classList.remove('bg-primary', 'text-white');
             badge.classList.add('bg-gray-100', 'text-text-muted', 'dark:bg-slate-700', 'dark:text-gray-400');
         }
