@@ -1,4 +1,12 @@
 <?php
+# Pindahkan bootstrap cache ke /tmp agar tidak error di Vercel
+$appContent = $_SERVER['DOCUMENT_ROOT'] ?? __DIR__;
+if (env('APP_ENV') === 'production') {
+    config(['app.manifest' => '/tmp/manifest']);
+    config(['view.compiled' => '/tmp/views']);
+    config(['cache.stores.file.path' => '/tmp/cache']);
+    config(['session.files' => '/tmp/sessions']);
+}
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
