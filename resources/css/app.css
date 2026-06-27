@@ -68,7 +68,7 @@
     input[type='search'],
     textarea,
     select {
-        @apply bg-gray-100 border-transparent shadow-none dark:bg-slate-800 dark:text-white transition-all duration-200;
+        @apply bg-gray-100 border-transparent shadow-none dark:bg-slate-900/50 dark:text-white transition-all duration-200;
     }
 
     input[type='text']:focus,
@@ -86,7 +86,7 @@
         position: relative;
     }
     .floating-input {
-        @apply block w-full px-4 pt-5 pb-2 text-sm text-gray-900 bg-gray-50 border-0 rounded-xl appearance-none dark:text-white dark:bg-slate-800 focus:outline-none focus:ring-0 focus:border-primary;
+        @apply block w-full px-4 pt-5 pb-2 text-sm text-gray-900 bg-gray-50 border-0 rounded-xl appearance-none dark:text-white dark:bg-slate-900/50 focus:outline-none focus:ring-0 focus:border-primary;
     }
     .floating-label {
         @apply absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] left-4;
