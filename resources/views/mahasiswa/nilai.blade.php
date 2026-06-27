@@ -29,7 +29,7 @@
             $keterangan = $k->keterangan_skala ?? [];
             $nilaiSaat  = $nilaiExisting[$k->id]->nilai ?? null;
         @endphp
-        <div class="border border-gray-100 rounded-xl p-4 hover:border-primary/30 transition-colors">
+        <div class="border border-gray-100 dark:border-slate-700 rounded-xl p-4 hover:border-primary/30 dark:hover:border-primary/50 transition-colors">
             {{-- Header Kriteria --}}
             <div class="mb-3">
                 <label class="block text-sm font-semibold text-on-surface">
@@ -45,7 +45,7 @@
             <div class="space-y-2">
                 @for($v = $k->skala_min; $v <= $k->skala_max; $v++)
                 <label class="flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all
-                    {{ $nilaiSaat == $v ? 'border-primary bg-primary-light/30' : 'border-gray-100 hover:border-gray-300 hover:bg-gray-50' }}"
+                    {{ $nilaiSaat == $v ? 'border-primary bg-primary-light/30 dark:bg-primary-900/30' : 'border-gray-100 dark:border-slate-700 hover:border-gray-300 dark:hover:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-800/50' }}"
                     id="label_{{ $k->id }}_{{ $v }}">
                     <input type="radio"
                         name="nilai[{{ $k->id }}]"
@@ -56,7 +56,7 @@
                         class="mt-0.5 accent-primary shrink-0">
                     <div class="flex items-start gap-3 flex-1">
                         <span class="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold shrink-0
-                            {{ $nilaiSaat == $v ? 'bg-primary text-white' : 'bg-gray-100 text-text-muted' }}"
+                            {{ $nilaiSaat == $v ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-slate-700 text-text-muted dark:text-gray-400' }}"
                             id="badge_{{ $k->id }}_{{ $v }}">
                             {{ $v }}
                         </span>
@@ -80,7 +80,7 @@
 
         <div class="flex justify-between pt-2">
             <a href="{{ route('mahasiswa.index') }}"
-                class="px-4 py-2 text-sm text-text-muted hover:bg-gray-100 rounded-xl">← Kembali</a>
+                class="px-4 py-2 text-sm text-text-muted hover:bg-gray-100 dark:hover:bg-slate-700/50 rounded-xl">← Kembali</a>
             <button type="submit"
                 class="bg-primary text-white px-6 py-2 rounded-xl text-sm font-medium hover:bg-primary-dark transition-colors flex items-center gap-2">
                 <span class="material-symbols-outlined text-base">save</span> Simpan Nilai
@@ -100,15 +100,15 @@ function highlightPilihan(kriteriaId, min, max) {
         if (!label || !badge || !radio) continue;
 
         if (radio.checked) {
-            label.classList.remove('border-gray-100', 'hover:border-gray-300', 'hover:bg-gray-50');
-            label.classList.add('border-primary', 'bg-primary-light/30');
-            badge.classList.remove('bg-gray-100', 'text-text-muted');
+            label.classList.remove('border-gray-100', 'hover:border-gray-300', 'hover:bg-gray-50', 'dark:border-slate-700', 'dark:hover:border-slate-600', 'dark:hover:bg-slate-800/50');
+            label.classList.add('border-primary', 'bg-primary-light/30', 'dark:bg-primary-900/30');
+            badge.classList.remove('bg-gray-100', 'text-text-muted', 'dark:bg-slate-700', 'dark:text-gray-400');
             badge.classList.add('bg-primary', 'text-white');
         } else {
-            label.classList.remove('border-primary', 'bg-primary-light/30');
-            label.classList.add('border-gray-100', 'hover:border-gray-300', 'hover:bg-gray-50');
+            label.classList.remove('border-primary', 'bg-primary-light/30', 'dark:bg-primary-900/30');
+            label.classList.add('border-gray-100', 'hover:border-gray-300', 'hover:bg-gray-50', 'dark:border-slate-700', 'dark:hover:border-slate-600', 'dark:hover:bg-slate-800/50');
             badge.classList.remove('bg-primary', 'text-white');
-            badge.classList.add('bg-gray-100', 'text-text-muted');
+            badge.classList.add('bg-gray-100', 'text-text-muted', 'dark:bg-slate-700', 'dark:text-gray-400');
         }
     }
 }
