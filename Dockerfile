@@ -10,6 +10,7 @@ RUN apk add --no-cache \
     php83-iconv \
     php83-openssl \
     php83-pdo_mysql \
+    php83-pdo_sqlite \  # <--- ADD THIS LINE
     php83-gd \
     php83-session \
     php83-fileinfo \
@@ -28,7 +29,6 @@ RUN apk add --no-cache \
     zip \
     unzip \
     git
-
 # 3. Symlink php83 to php
 RUN ln -sf /usr/bin/php83 /usr/bin/php
 
@@ -53,9 +53,9 @@ COPY . .
 # 8. Install dependencies FIRST
 RUN composer install --no-dev --optimize-autoloader
 
-# 9. Clear cache and config, bypassing the database connection requirements
-RUN DB_CONNECTION=sqlite DB_DATABASE=/dev/null CACHE_DRIVER=array php artisan config:clear && \
-    DB_CONNECTION=sqlite DB_DATABASE=/dev/null CACHE_DRIVER=array php artisan cache:clear
+# 9. Clear cache using the array driver to avoid database connection errors during build
+RUN CACHE_DRIVER=array php artisan config:clear && \
+    CACHE_DRIVER=array php artisan cache:clear
 
 # 10. Fix permissions
 RUN chown -R apache:apache /var/www/localhost/htdocs/storage /var/www/localhost/htdocs/bootstrap/cache
