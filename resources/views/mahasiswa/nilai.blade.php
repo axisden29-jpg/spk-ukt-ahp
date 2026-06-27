@@ -53,7 +53,7 @@
                         {{ $nilaiSaat == $v ? 'checked' : '' }}
                         required
                         onchange="highlightPilihan({{ $k->id }}, {{ $k->skala_min }}, {{ $k->skala_max }})"
-                        class="accent-primary shrink-0">
+                        class="sr-only">
                     <div class="flex items-center gap-3 flex-1">
                         <span class="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold shrink-0
                             {{ $nilaiSaat == $v ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-slate-700 text-text-muted dark:text-gray-400' }}"
