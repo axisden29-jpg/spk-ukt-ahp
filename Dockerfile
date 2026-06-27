@@ -1,7 +1,11 @@
-# 1. Use the official lightweight Alpine base image
+# ==========================================
+# Base Image
+# ==========================================
 FROM alpine:3.20
 
-# 2. Install Apache, PHP 8.3, and all Laravel-required extensions
+# ==========================================
+# Install Apache, PHP 8.3 dan ekstensi Laravel
+# ==========================================
 RUN apk add --no-cache \
     apache2 \
     php83-apache2 \
@@ -9,8 +13,10 @@ RUN apk add --no-cache \
     php83-phar \
     php83-iconv \
     php83-openssl \
+    php83-pdo \
     php83-pdo_mysql \
-    php83-pdo_sqlite \  # <--- ADD THIS LINE
+    php83-pdo_sqlite \
+    php83-sqlite3 \
     php83-gd \
     php83-session \
     php83-fileinfo \
@@ -29,13 +35,20 @@ RUN apk add --no-cache \
     zip \
     unzip \
     git
-# 3. Symlink php83 to php
+
+# ==========================================
+# Symlink PHP
+# ==========================================
 RUN ln -sf /usr/bin/php83 /usr/bin/php
 
-# 4. Copy Composer
+# ==========================================
+# Install Composer
+# ==========================================
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 5. Configure Apache
+# ==========================================
+# Konfigurasi Apache
+# ==========================================
 RUN sed -i 's/Listen 80/Listen 7860/' /etc/apache2/httpd.conf && \
     sed -i 's#^DocumentRoot ".*#DocumentRoot "/var/www/localhost/htdocs/public"#' /etc/apache2/httpd.conf && \
     sed -i 's#Directory "/var/www/localhost/htdocs"#Directory "/var/www/localhost/htdocs/public"#' /etc/apache2/httpd.conf && \
@@ -44,23 +57,51 @@ RUN sed -i 's/Listen 80/Listen 7860/' /etc/apache2/httpd.conf && \
     echo "LoadModule php_module /usr/lib/apache2/mod_php83.so" >> /etc/apache2/httpd.conf && \
     echo "AddHandler php-script .php" >> /etc/apache2/httpd.conf
 
-# 6. Set working directory
+# ==========================================
+# Working Directory
+# ==========================================
 WORKDIR /var/www/localhost/htdocs
 
-# 7. Copy project files
+# ==========================================
+# Copy Source Code
+# ==========================================
 COPY . .
 
-# 8. Install dependencies FIRST
+# ==========================================
+# Install Composer Dependency
+# ==========================================
 RUN composer install --no-dev --optimize-autoloader
 
-# 9. Clear cache using the array driver to avoid database connection errors during build
-RUN CACHE_DRIVER=array php artisan config:clear && \
-    CACHE_DRIVER=array php artisan cache:clear
+# ==========================================
+# Bersihkan Config Laravel
+# (Tidak menjalankan cache:clear)
+# ==========================================
+RUN CACHE_STORE=array \
+    SESSION_DRIVER=array \
+    QUEUE_CONNECTION=sync \
+    php artisan config:clear
 
-# 10. Fix permissions
-RUN chown -R apache:apache /var/www/localhost/htdocs/storage /var/www/localhost/htdocs/bootstrap/cache
+# ==========================================
+# Permission
+# ==========================================
+RUN mkdir -p storage/framework/cache/data && \
+    mkdir -p storage/framework/sessions && \
+    mkdir -p storage/framework/views && \
+    chown -R apache:apache storage bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
+
+# ==========================================
+# Environment
+# ==========================================
+ENV APP_ENV=production
+ENV APP_DEBUG=false
+ENV CACHE_STORE=file
+ENV SESSION_DRIVER=file
+ENV QUEUE_CONNECTION=sync
 
 EXPOSE 7860
-ENV APP_DEBUG=true
 
+# ==========================================
+# Start Apache
+# ==========================================
 CMD ["httpd", "-D", "FOREGROUND"]
