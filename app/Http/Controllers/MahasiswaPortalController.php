@@ -60,7 +60,24 @@ class MahasiswaPortalController extends Controller
         foreach ($kriterias as $k) {
             $rules["nilai.{$k->id}"] = "required|numeric|min:{$k->skala_min}|max:{$k->skala_max}";
         }
+        $rules['file_kk'] = 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048';
+        $rules['file_tagihan_listrik'] = 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048';
+
         $request->validate($rules);
+
+        if ($request->hasFile('file_kk')) {
+            $pathKk = $request->file('file_kk')->store('dokumen_mahasiswa', 'public');
+            $mahasiswa->file_kk = $pathKk;
+        }
+
+        if ($request->hasFile('file_tagihan_listrik')) {
+            $pathListrik = $request->file('file_tagihan_listrik')->store('dokumen_mahasiswa', 'public');
+            $mahasiswa->file_tagihan_listrik = $pathListrik;
+        }
+        
+        if ($mahasiswa->isDirty()) {
+            $mahasiswa->save();
+        }
 
         foreach ($kriterias as $k) {
             NilaiMahasiswa::updateOrCreate(
@@ -74,7 +91,7 @@ class MahasiswaPortalController extends Controller
         }
 
         return redirect()->route('mahasiswa.portal.dashboard')
-            ->with('success', 'Data nilai berhasil disimpan. Terima kasih!');
+            ->with('success', 'Data nilai beserta dokumen berhasil disimpan. Terima kasih!');
     }
 
     public function hasil()

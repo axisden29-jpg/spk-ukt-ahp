@@ -17,8 +17,44 @@
     </p>
 </div>
 
-<form method="POST" action="{{ route('mahasiswa.portal.simpanNilai') }}" class="space-y-5">
+<form method="POST" action="{{ route('mahasiswa.portal.simpanNilai') }}" class="space-y-5" enctype="multipart/form-data">
     @csrf
+    <div class="card p-5 mb-5 border-l-4 border-blue-500">
+        <h3 class="font-semibold text-on-surface mb-2">Upload Dokumen Pendukung</h3>
+        <p class="text-xs text-text-muted mb-4">Unggah dokumen berupa file PDF, JPG, atau PNG (Maks 2MB) sebagai bukti data yang Anda isikan.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-on-surface mb-1">Kartu Keluarga (KK)</label>
+                @if($mahasiswa->file_kk)
+                    <div class="mb-2">
+                        <a href="{{ Storage::url($mahasiswa->file_kk) }}" target="_blank" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">visibility</span> Lihat Dokumen KK Tersimpan
+                        </a>
+                    </div>
+                @endif
+                <input type="file" name="file_kk" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-200 p-1 rounded-lg">
+                @error('file_kk')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-on-surface mb-1">Tagihan Listrik</label>
+                @if($mahasiswa->file_tagihan_listrik)
+                    <div class="mb-2">
+                        <a href="{{ Storage::url($mahasiswa->file_tagihan_listrik) }}" target="_blank" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">visibility</span> Lihat Dokumen Tagihan Listrik Tersimpan
+                        </a>
+                    </div>
+                @endif
+                <input type="file" name="file_tagihan_listrik" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-200 p-1 rounded-lg">
+                @error('file_tagihan_listrik')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
     @foreach($kriterias as $k)
     @php
         $keterangan = $k->keterangan_skala ?? [];

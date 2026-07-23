@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mahasiswa extends Model
 {
-    protected $fillable = ['nim', 'nama', 'program_studi', 'angkatan'];
+    protected $fillable = ['nim', 'nama', 'program_studi', 'angkatan', 'file_kk', 'file_tagihan_listrik'];
 
     public function nilaiMahasiswas()
     {

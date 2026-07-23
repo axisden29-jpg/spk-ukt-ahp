@@ -22,6 +22,29 @@
 </div>
 
 <div class="card p-6 max-w-2xl">
+    <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="border border-gray-100 dark:border-slate-700 rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-on-surface mb-2">Kartu Keluarga (KK)</h3>
+            @if($mahasiswa->file_kk)
+                <a href="{{ Storage::url($mahasiswa->file_kk) }}" target="_blank" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">visibility</span> Lihat Dokumen KK
+                </a>
+            @else
+                <p class="text-sm text-text-muted italic">Belum ada dokumen.</p>
+            @endif
+        </div>
+        <div class="border border-gray-100 dark:border-slate-700 rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-on-surface mb-2">Tagihan Listrik</h3>
+            @if($mahasiswa->file_tagihan_listrik)
+                <a href="{{ Storage::url($mahasiswa->file_tagihan_listrik) }}" target="_blank" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">visibility</span> Lihat Dokumen Tagihan Listrik
+                </a>
+            @else
+                <p class="text-sm text-text-muted italic">Belum ada dokumen.</p>
+            @endif
+        </div>
+    </div>
+
     <form method="POST" action="{{ route('mahasiswa.simpanNilai', $mahasiswa) }}" class="space-y-6">
         @csrf
         @foreach($kriterias as $k)
